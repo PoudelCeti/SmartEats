@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Eat</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #f2f2f2;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .icon {
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+  
+    .modal {
+      display: none;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background: white;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      width: 250px;
+      z-index: 1000;
+    }
+
+    .modal h3 {
+      margin-top: 0;
+    }
+
+    .modal input, .modal select {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .modal label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+
+    .modal button {
+      width: 100%;
+      padding: 8px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .modal button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="icon" onclick="toggleModal('profileModal')"><i class="fas fa-user"></i></div>
+    <div class="title">Smart Eat</div>
+    <div class="icon" onclick="toggleModal('settingsModal')"><i class="fas fa-cog"></i></div>
+  </header>
+
+  
+  <div id="profileModal" class="modal">
+    <h3>Editar Perfil</h3>
+    <input type="text" placeholder="Nombre" id="nameInput">
+    <input type="email" placeholder="Correo electrónico" id="emailInput">
+    <button onclick="saveProfile()">Guardar</button>
+  </div>
+
+
+  <div id="settingsModal" class="modal">
+    <h3>Configuraciones</h3>
+    <label for="languageSelect">Idioma:</label>
+    <select id="languageSelect">
+      <option value="es">Español</option>
+      <option value="en">Inglés</option>
+    </select>
+
+    <label for="notificationsToggle">Notificaciones:</label>
+    <select id="notificationsToggle">
+      <option value="on">Activadas</option>
+      <option value="off">Desactivadas</option>
+    </select>
+
+    <button onclick="saveSettings()">Guardar Configuración</button>
+  </div>
+
+  <script>
+    function toggleModal(id) {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => {
+        if (modal.id === id) {
+          modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+        } else {
+          modal.style.display = 'none';
+        }
+      });
+    }
+
+    function saveProfile() {
+      const name = document.getElementById("nameInput").value;
+      const email = document.getElementById("emailInput").value;
+
+      alert("Datos guardados:\nNombre: " + name + "\nCorreo: " + email);
+      toggleModal('profileModal');
+    }
+
+    function saveSettings() {
+      const language = document.getElementById("languageSelect").value;
+      const notifications = document.getElementById("notificationsToggle").value;
+
+      alert("Configuración guardada:\nIdioma: " + language + "\nNotificaciones: " + notifications);
+      toggleModal('settingsModal');
+    }
+
+    window.addEventListener('click', function(e) {
+      const profile = document.getElementById("profileModal");
+      const settings = document.getElementById("settingsModal");
+      if (!profile.contains(e.target) && !settings.contains(e.target) && !e.target.closest('.fa-user') && !e.target.closest('.fa-cog')) {
+        profile.style.display = 'none';
+        settings.style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>
